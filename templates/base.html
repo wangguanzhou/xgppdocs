@@ -10,22 +10,60 @@
 
     <title>3GPP Docs Online</title>
     
-		<style>
+		<style type="text/css">
 			* {
 					font-family: 'Work Sans', sans-serif;
 				}
-
-      
-		
+			.hidden.menu {
+				display: none;
+			}
+			.masthead.segment {
+				min-height: 80px;
+				padding: 1em 0em;
+			}
+			
+			.grid.ui {
+				padding: 0em 1em;
+			}
+			
+			.masthead h1.ui.header {
+				margin-top: 0em;
+				margin-bottom: 0em;
+				font-size: 1.6em;
+				font-weight: normal;
+			}
+			.masthead h2 {
+				font-size: 1em;
+				font-weight: normal;
+			}
+	
 		</style>
 
   </head>
 	
   <body>
-		
+		<div class="ui masthead grey inverted segment">
+			<div class="ui container">
+				<div class="ui inverted secondary menu">
+					<div class="ui item header">
+						<h1>3GPP Docs Online</h1>
+					</div>
+					<div class="ui item">
+						I just hate downloading 3GPP FTP...
+					</div>
+					<div class="right menu">
+						<a class="ui active item">Meetings</a>
+						<a class="ui item">Specs</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+			
 		{% block home-page %}
 		{% endblock %}
-    
+		
+	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="{% static 'Semantic-UI/semantic.js' %}"></script>
     
