@@ -6,24 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="{% static 'Semantic-UI/semantic.css' %}" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 
     <title>3GPP Docs Online</title>
     
 		<style type="text/css">
 			* {
-					font-family: 'Work Sans', sans-serif;
+					font-family: 'Open Sans', sans-serif;
 				}
+			
 			.hidden.menu {
 				display: none;
 			}
-			.masthead.segment {
+			.masthead {
 				min-height: 80px;
+				background-color: slategray;
 				padding: 1em 0em;
 			}
 			
 			.grid.ui {
-				padding: 0em 1em;
+				padding: 0em 0em;
+				min-height: 100%;
+			}
+
+			.ui.menu .item {
+				vertical-align: bottom;
 			}
 			
 			.masthead h1.ui.header {
@@ -42,15 +49,13 @@
   </head>
 	
   <body>
-		<div class="ui masthead grey inverted segment">
-			<div class="ui container">
+		<div class="ui masthead">
+			<div class="ui text container">
 				<div class="ui inverted secondary menu">
 					<div class="ui item header">
 						<h1>3GPP Docs Online</h1>
 					</div>
-					<div class="ui item">
-						I just hate downloading 3GPP FTP...
-					</div>
+				
 					<div class="right menu">
 						<a class="ui active item">Meetings</a>
 						<a class="ui item">Specs</a>
