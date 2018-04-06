@@ -2,6 +2,34 @@
 {% load static %}
 
 {% block tdoc-list %}
+<table class="ui very basic selectable very compact small table">
+    <thead><tr>
+        <th>TDoc#</th>
+        <th>Title</th>
+        <th>Source</th>
+        <th>Type</th>
+        <th>Agenda Item</th>
+        <th>Revised To</th>
+        <th>Status</th>
+    </tr></thead>
+    <tbody>
+        {% for tdoc in tdoc_list %}
+            {% if tdoc.status == 'agreed' or tdoc.status == 'approved' %}
+            <tr bgcolor="#00ff00">
+            {% else %}
+            <tr>
+            {% endif %}
+                <td>{{tdoc.number}}</td>
+                <td>{{tdoc.title}}</td>
+                <td>{{tdoc.source}}</td>
+                <td>{{tdoc.type}}</td>
+                <td>{{tdoc.agenda_item}} -- {{tdoc.ai_description}}</td>
+                <td>{{tdoc.revised_to}}</td>
+                <td>{{tdoc.status}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 
-{{ meeting_no }} {{ tdoc_list }}
+</table>
+
 {% endblock %}
