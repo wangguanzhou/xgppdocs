@@ -53,6 +53,21 @@ def tdoc_list_exist(meeting_no):
     else:
         return False
 
+def tdoc_list_exist(meeting_no, tdoc_number):
+    tdoc_file = TDOC_ROOT + meeting_no + '/' + tdoc_number 
+    for ext in ['.doc', '.docx', '.pdf', '.ppt']:
+        if os.path.exists(tdoc_file + ext):
+            return True
+    return False
+
+def get_tdoc_link(meeting_no, tdoc_number):
+    meeting_link = 'http://3gppdocsonline.com/tdocs/' + meeting_no + '/'
+    tdoc_file = TDOC_ROOT + meeting_no + '/' + tdoc_number 
+    for ext in ['.doc', '.docx', '.pdf', '.ppt']:
+        if os.path.exists(tdoc_file + ext):
+            return meeting_link + tdoc_number + ext
+    return ''
+    
 def get_tdoc_list(meeting_no):
     tdoc_list = []
     tdoclist_path = os.path.join(BASE_DIR + '/tdoclist/')
@@ -75,7 +90,9 @@ def get_tdoc_list(meeting_no):
             tdoc['status'] = sheet.row_values(row)[13]
             tdoc['revision_of'] = sheet.row_values(row)[16]
             tdoc['revised_to'] = sheet.row_values(row)[17]
-            
+            tdoc['exist'] = tdoc_exist(meeting_no, tdoc['number'])
+            tdoc['link'] = get_tdoc_link(meeting_no, tdoc['number'])
+                
             tdoc_list.append(tdoc)
             row += 1
         

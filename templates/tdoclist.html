@@ -19,7 +19,12 @@
             {% else %}
             <tr>
             {% endif %}
-                <td>{{tdoc.number}}</td>
+                {% if tdoc.exist %}
+                    <td><a href={{tdoc.link}}>{{tdoc.number}}</a></td>
+                {% else %}
+                    <td>{{tdoc.number}}</td>
+                {% endif %}
+                
                 <td>{{tdoc.title}}</td>
                 <td>{{tdoc.source}}</td>
                 <td>{{tdoc.type}}</td>
