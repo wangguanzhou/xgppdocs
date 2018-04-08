@@ -53,7 +53,7 @@ def tdoc_list_exist(meeting_no):
     else:
         return False
 
-def tdoc_list_exist(meeting_no, tdoc_number):
+def tdoc_exist(meeting_no, tdoc_number):
     tdoc_file = TDOC_ROOT + meeting_no + '/' + tdoc_number 
     for ext in ['.doc', '.docx', '.pdf', '.ppt']:
         if os.path.exists(tdoc_file + ext):
