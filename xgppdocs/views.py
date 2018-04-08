@@ -3,6 +3,7 @@ from settings import BASE_DIR
 import os
 from ftplib import FTP
 import xlrd
+from .forms import TDocFilter
 
 SA2Meetings = [
     {'name': 'SA2-126', 'time': 'Feb 2018', 'city': 'Montreal',},
@@ -36,6 +37,8 @@ def showtdoclist(request):
         if tdoc_list_exist(meeting_no):
             tdoc_list = get_tdoc_list(meeting_no)
             context['tdoc_list'] = tdoc_list
+            context['tdoc_filter'] = TDocFilter()
+
         return render(request, 'tdoclist.html', context)
         
 def tdoc_list_exist(meeting_no):

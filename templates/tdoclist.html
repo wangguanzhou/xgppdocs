@@ -2,6 +2,25 @@
 {% load static %}
 
 {% block tdoc-list %}
+
+<form class="ui form" method="POST">
+    {% csrf_token %}
+    <div class="four fields">
+        <div class="two wide field">
+            {{tdoc_filter.tdoc_source}}
+        </div>
+        <div class="two wide field">
+            {{tdoc_filter.tdoc_type}}
+        </div>
+        <div class="four wide field">
+            {{tdoc_filter.tdoc_agendaitem}}
+        </div>
+        <div class="two wide field">
+            {{tdoc_filter.tdoc_status}}
+        </div>
+    </div>
+</form>
+
 <table class="ui very basic selectable very compact small table">
     <thead><tr>
         <th class="two wide">TDoc#</th>
