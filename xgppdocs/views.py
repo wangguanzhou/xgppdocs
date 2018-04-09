@@ -37,7 +37,10 @@ def showtdoclist(request):
         if tdoc_list_exist(meeting_no):
             tdoc_list = get_tdoc_list(meeting_no)
             context['tdoc_list'] = tdoc_list
-            context['tdoc_filter'] = TDocFilter()
+            tdoc_filter = TDocFilter()
+            tdoc_filter.fields['tdoc_source'].choices = get_tdoc_source_options(tdoc_list)
+            tdoc_filter.fields['tdoc_agendaitem'].choices = get_tdoc_agendaitem_options(tdoc_list)
+            context['tdoc_filter'] = tdoc_filter
 
         return render(request, 'tdoclist.html', context)
         
@@ -100,6 +103,42 @@ def get_tdoc_list(meeting_no):
             row += 1
         
         return tdoc_list
+
+def get_tdoc_source_options(tdoc_list):
+    tdoc_source_options = [('All', 'Source (All)')]
+    source_list = []
+    for tdoc in tdoc_list:
+        company_list = tdoc['source'].split(',')
+        for company in company_list:
+            if not company.lower().strip() in [x.lower() for x in source_list] and len(company)>0:
+                source_list.append(company.strip())
+    
+    source_list = sorted(source_list)
+    if len(source_list) > 0:
+        for source in source_list:
+            tdoc_source_tuple = (source, source)
+            tdoc_source_options.append(tdoc_source_tuple)
+    
+    return tuple(tdoc_source_options)
+
+def get_tdoc_agendaitem_options(tdoc_list):
+    tdoc_agendaitem_options = [('All', 'Source (All)')]
+    agendaitem_list = []
+    temp_list = []
+    ai_descriptions = {}
+
+    for tdoc in tdoc_list:
+        agendaitem = tdoc['agenda_item']
+        if not agendaitem in temp_list:
+            temp_list.append(agendaitem)
+            ai_descriptions[agendaitem] = tdoc['ai_description']
+        
+    temp_list = sorted(temp_list)
+    for ai in temp_list:
+        ai_tuple = (ai, ai + '--' + ai_descriptions[ai])
+        tdoc_agendaitem_options.append(ai_tuple)
+
+    return tuple(tdoc_agendaitem_options)
 
 
 

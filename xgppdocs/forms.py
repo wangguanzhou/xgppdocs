@@ -3,12 +3,9 @@ from django import forms
 class TDocFilter(forms.Form):
     tdoc_source = forms.ChoiceField(
         label='',
-        initial='Source',
-        choices=(('1', '1'),('2', '2')),
         widget=forms.Select(
             attrs={
                 'class': 'ui fluid dropdown',
-                'placeholder': 'Source'
             }
         ),
     )
