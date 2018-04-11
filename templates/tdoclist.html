@@ -3,11 +3,10 @@
 
 {% block tdoc-list %}
 <div class="ui segment">
-<form class="ui form" method="POST">
-    {% csrf_token %}
+<form class="ui small form" action="/meetings/" method="GET">
     <div class="inline fields">
-        <div class="two wide field">
-            TDoc Filters
+        <div class="field">
+            {{tdoc_filter.meeting_no}}
         </div>
         <div class="two wide field">
             {{tdoc_filter.tdoc_source}}
@@ -21,7 +20,7 @@
         <div class="two wide field">
             {{tdoc_filter.tdoc_status}}
         </div>
-        <button class="ui labeled icon button" type="submit">
+        <button class="ui labeled icon button" name="filter_button" type="submit">
             <i class="filter icon"></i>Filter
         </button>
     </div>

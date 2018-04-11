@@ -15,12 +15,12 @@
                     <tr>
                     {% endif %}
                     <td>
-                        <a href="/meetings/?meeting={{meeting.name}}">
+                        <a href="/meetings/?meeting_no={{meeting.name}}">
                         {{meeting.name}}
                         </a>
                     </td>
                     <td>
-                        <a href="/meetings/?meeting={{meeting.name}}">
+                        <a href="/meetings/?meeting_no={{meeting.name}}">
                         {{meeting.time}}, {{meeting.city}}
                         </a>
                     </td>
@@ -34,6 +34,7 @@
     <div class="twelve wide column">
         {% block tdoc-list %}
         {% endblock %}
+        {{ form_error }}
     </div>
 </div>
 

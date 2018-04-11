@@ -35,18 +35,48 @@ def homepage(request):
 def showtdoclist(request):
     context = {}
     context['sa2meetings'] = SA2Meetings
+
+    if request.POST:
+        # meeting_no = request.GET['meeting']
+        filter_form = TDocFilter(request.POST)
+        if filter_form.is_valid():
+            tdoc_filter = filter_form.cleaned_data
+            context['tdoc_filter'] = tdoc_filter
+        else:
+            context['form_error'] = filter_form.errors
+            
+        return render(request, 'homepage.html', context)
+
     if request.GET:
-        meeting_no = request.GET['meeting']
+        meeting_no = request.GET['meeting_no']
         context['meeting_no'] = meeting_no
         if tdoc_list_exist(meeting_no):
             tdoc_list = get_tdoc_list(meeting_no)
-            context['tdoc_list'] = tdoc_list
-            tdoc_filter = TDocFilter()
-            tdoc_filter.fields['tdoc_source'].choices = get_tdoc_source_options(tdoc_list)
-            tdoc_filter.fields['tdoc_agendaitem'].choices = get_tdoc_agendaitem_options(tdoc_list)
-            context['tdoc_filter'] = tdoc_filter
+        else:
+            return render(request, 'homepage.html', context)
 
+        if not 'filter_button' in request.GET:
+            context['tdoc_list'] = tdoc_list
+           
+        else:
+            tdoc_filter = {}
+            tdoc_filter['source'] = request.GET['tdoc_source']
+            tdoc_filter['agendaitem'] = request.GET['tdoc_agendaitem']
+            tdoc_filter['type'] = request.GET['tdoc_type']
+            tdoc_filter['status'] = request.GET['tdoc_status']
+            filtered_tdoc_list = filter_tdoc_list(tdoc_list, tdoc_filter)
+            context['tdoc_list'] = filtered_tdoc_list
+
+        tdoc_filter_form = TDocFilter()
+        tdoc_filter_form.fields['meeting_no'].initial = meeting_no
+        tdoc_filter_form.fields['tdoc_source'].choices = get_tdoc_source_options(tdoc_list)
+        tdoc_filter_form.fields['tdoc_type'].choices = get_tdoc_type_options(tdoc_list)
+        tdoc_filter_form.fields['tdoc_agendaitem'].choices = get_tdoc_agendaitem_options(tdoc_list)
+        tdoc_filter_form.fields['tdoc_status'].choices = get_tdoc_status_options(tdoc_list)
+        context['tdoc_filter'] = tdoc_filter_form
         return render(request, 'tdoclist.html', context)
+
+    
         
 def tdoc_list_exist(meeting_no):
     tdoclist_path = os.path.join(BASE_DIR + '/tdoclist/')
@@ -108,6 +138,17 @@ def get_tdoc_list(meeting_no):
         
         return tdoc_list
 
+def filter_tdoc_list(tdoc_list, tdoc_filter):
+    filtered_tdoc_list = []
+    for tdoc in tdoc_list:
+        bool_source = (tdoc_filter['source'] == 'All') or (tdoc_filter['source'] in tdoc['source'].split(','))
+        bool_type = (tdoc_filter['type'] == 'All') or (tdoc_filter['type'] == tdoc['type'])
+        bool_agendaitem = (tdoc_filter['agendaitem'] == 'All') or (tdoc_filter['agendaitem'] == tdoc['agenda_item'])
+        bool_status = (tdoc_filter['status'] == 'All') or (tdoc_filter['status'] == tdoc['status'])
+        if bool_source and bool_type and bool_agendaitem and bool_status:
+            filtered_tdoc_list.append(tdoc)
+    return filtered_tdoc_list
+         
 def get_tdoc_source_options(tdoc_list):
     tdoc_source_options = [('All', 'Source (All)')]
     source_list = []
@@ -126,7 +167,7 @@ def get_tdoc_source_options(tdoc_list):
     return tuple(tdoc_source_options)
 
 def get_tdoc_agendaitem_options(tdoc_list):
-    tdoc_agendaitem_options = [('All', 'Source (All)')]
+    tdoc_agendaitem_options = [('All', 'Agenda Item (All)')]
     agendaitem_list = []
     temp_list = []
     ai_descriptions = {}
@@ -144,6 +185,38 @@ def get_tdoc_agendaitem_options(tdoc_list):
 
     return tuple(tdoc_agendaitem_options)
 
+
+def get_tdoc_type_options(tdoc_list):
+    tdoc_type_options = [('All', 'Type (All)')]
+    temp_list = []
+
+    for tdoc in tdoc_list:
+        tdoc_type = tdoc['type']
+        if not tdoc_type in temp_list:
+            temp_list.append(tdoc_type)
+    
+    temp_list = sorted(temp_list)
+    for type in temp_list:
+        type_tuple = (type, type)
+        tdoc_type_options.append(type_tuple)
+    
+    return tuple(tdoc_type_options)
+
+def get_tdoc_status_options(tdoc_list):
+    tdoc_status_options = [('All', 'Status (All)')]
+    temp_list = []
+
+    for tdoc in tdoc_list:
+        tdoc_status = tdoc['status']
+        if not tdoc_status in temp_list:
+            temp_list.append(tdoc_status)
+    
+    temp_list = sorted(temp_list)
+    for status in temp_list:
+        status_tuple = (status, status)
+        tdoc_status_options.append(status_tuple)
+    
+    return tuple(tdoc_status_options)
 
 
 

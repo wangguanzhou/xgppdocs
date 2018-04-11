@@ -1,27 +1,28 @@
 from django import forms
 
 class TDocFilter(forms.Form):
+    #def __init__(self, *args, **kwargs):
+    #    source_choices = kwargs.pop('source_choices')
+    #    super(TDocFilter, self).__init__(*args, **kwargs)
+    #    self.fields['tdoc_source'] = forms.ChoiceField(choices=source_choices)
+    meeting_no = forms.CharField(
+        label='',
+        widget=forms.HiddenInput(),
+    )
     tdoc_source = forms.ChoiceField(
         label='',
-        widget=forms.Select(
-            attrs={
-                'class': 'ui fluid dropdown',
-            }
-        ),
+        widget=forms.Select(),
     )
     tdoc_type = forms.ChoiceField(
         label='',
-        initial='Type',
         widget=forms.Select(),
     )
-    tdoc_agendaitem = forms.ChoiceField(
+    tdoc_agendaitem = forms.MultipleChoiceField(
         label='',
-        initial='Agenda Item',
         widget=forms.Select(),
     )
-    tdoc_status = forms.ChoiceField(
+    tdoc_status = forms.MultipleChoiceField(
         label='',
-        initial='Status',
         widget=forms.Select(),
     )
     
