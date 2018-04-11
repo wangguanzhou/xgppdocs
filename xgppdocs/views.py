@@ -30,6 +30,7 @@ TDOC_ROOT = '/var/www/xgppdocs/tdocs/'
 def homepage(request):
     context = {}
     context['sa2meetings'] = SA2Meetings
+    
     return render(request, 'homepage.html', context)
 
 def showtdoclist(request):
