@@ -68,11 +68,12 @@ def showtdoclist(request):
             context['tdoc_list'] = filtered_tdoc_list
 
         tdoc_filter_form = TDocFilter()
-        tdoc_filter_form.fields['meeting_no'].initial = meeting_no
         tdoc_filter_form.fields['tdoc_source'].choices = get_tdoc_source_options(tdoc_list)
         tdoc_filter_form.fields['tdoc_type'].choices = get_tdoc_type_options(tdoc_list)
         tdoc_filter_form.fields['tdoc_agendaitem'].choices = get_tdoc_agendaitem_options(tdoc_list)
         tdoc_filter_form.fields['tdoc_status'].choices = get_tdoc_status_options(tdoc_list)
+        tdoc_filter_form.fields['meeting_no'].initial = meeting_no
+        
         context['tdoc_filter'] = tdoc_filter_form
         return render(request, 'tdoclist.html', context)
 
@@ -141,7 +142,7 @@ def get_tdoc_list(meeting_no):
 def filter_tdoc_list(tdoc_list, tdoc_filter):
     filtered_tdoc_list = []
     for tdoc in tdoc_list:
-        bool_source = (tdoc_filter['source'] == 'All') or (tdoc_filter['source'] in tdoc['source'].split(','))
+        bool_source = (tdoc_filter['source'] == 'All') or (tdoc_filter['source'] in [x.strip() for x in tdoc['source'].split(',')])
         bool_type = (tdoc_filter['type'] == 'All') or (tdoc_filter['type'] == tdoc['type'])
         bool_agendaitem = (tdoc_filter['agendaitem'] == 'All') or (tdoc_filter['agendaitem'] == tdoc['agenda_item'])
         bool_status = (tdoc_filter['status'] == 'All') or (tdoc_filter['status'] == tdoc['status'])
