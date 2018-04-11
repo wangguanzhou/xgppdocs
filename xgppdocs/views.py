@@ -156,7 +156,7 @@ def get_tdoc_source_options(tdoc_list):
     for tdoc in tdoc_list:
         company_list = tdoc['source'].split(',')
         for company in company_list:
-            if not company.lower().strip() in [x.lower() for x in source_list] and len(company)>0:
+            if not company.lower().strip() in [x.lower() for x in source_list] and len(company)>1:
                 source_list.append(company.strip())
     
     source_list = sorted(source_list)
