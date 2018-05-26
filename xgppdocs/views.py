@@ -21,7 +21,7 @@ MeetingTDocPath = {
     'SA2-125': SA2Path+'TSGS2_125_Gothenburg/Docs/',
 }
 TDocListNames = {
-    'SA2-127': 'TDoc_List_Meeting_SA2#127-Bis.xlsx',
+    'SA2-127bis': 'TDoc_List_Meeting_SA2#127-Bis.xlsx',
     'SA2-127': 'TDoc_List_Meeting_SA2#127.xlsx',
     'SA2-126': 'TDoc_List_Meeting_SA2#126.xlsx',
     'SA2-125': 'TDoc_List_Meeting_SA2#125.xlsx',
