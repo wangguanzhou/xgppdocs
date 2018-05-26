@@ -6,6 +6,7 @@ import xlrd
 from .forms import TDocFilter
 
 SA2Meetings = [
+    {'name': 'SA2-127bis', 'time': 'May 2018', 'city': 'Newport Beach',},
     {'name': 'SA2-127', 'time': 'Apr 2018', 'city': 'Sanya',},
     {'name': 'SA2-126', 'time': 'Feb 2018', 'city': 'Montreal',},
     {'name': 'SA2-125', 'time': 'Jan 2018', 'city': 'Gothenburg',},
@@ -14,11 +15,13 @@ SA2Meetings = [
 FTP_3GPP_HOST = 'ftp.3gpp.org'
 SA2Path = '/tsg_sa/WG2_Arch/'
 MeetingTDocPath = {
+    'SA2-127bis': SA2Path+'TSGS2_127BIS_Newport_Beach/Docs/',
     'SA2-127': SA2Path+'TSGS2_127_Sanya/Docs/',
     'SA2-126': SA2Path+'TSGS2_126_Montreal/Docs/',
     'SA2-125': SA2Path+'TSGS2_125_Gothenburg/Docs/',
 }
 TDocListNames = {
+    'SA2-127': 'TDoc_List_Meeting_SA2#127-Bis.xlsx',
     'SA2-127': 'TDoc_List_Meeting_SA2#127.xlsx',
     'SA2-126': 'TDoc_List_Meeting_SA2#126.xlsx',
     'SA2-125': 'TDoc_List_Meeting_SA2#125.xlsx',
